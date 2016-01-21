@@ -77,10 +77,19 @@ void MainWindow::on_createHire_clicked()
           qDebug() <<"creating | hiring error"<< creatinghiring->lastError();
 
         creatinghiringMsgBox->exec();
-    }else{
+     }else{
         creatinghiringMsgBox->setText("New employee is hired and added to our database!");
         creatinghiringMsgBox->exec();
     }
+
+    ui->lineEdit_fullName->clear();
+    ui->lineEdit_age->clear();
+    ui->lineEdit_residence->clear();
+    ui->lineEdit_salary->clear();
+    ui->lineEdit_bonuses->clear();
+    ui->lineEdit_insurance->clear();
+    ui->lineEdit_vacation->clear();
+    ui->lineEdit_urgentdays->clear();
 
 }
 

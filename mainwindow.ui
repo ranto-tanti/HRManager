@@ -473,6 +473,9 @@
         <height>20</height>
        </rect>
       </property>
+      <property name="readOnly">
+       <bool>true</bool>
+      </property>
      </widget>
      <widget class="QLabel" name="label_37">
       <property name="geometry">
@@ -687,10 +690,6 @@
      <string>TextLabel</string>
     </property>
    </widget>
-   <zorder>employees</zorder>
-   <zorder>label</zorder>
-   <zorder>label</zorder>
-   <zorder>label_2</zorder>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
