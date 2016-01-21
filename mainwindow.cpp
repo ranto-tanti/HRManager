@@ -8,6 +8,7 @@
 #include <QString>
 #include <QSqlQueryModel>
 #include <QMessageBox>
+#include <QSqlQueryModel>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -35,8 +36,6 @@ MainWindow::MainWindow(QWidget *parent) :
                    "vacation integer DEFAULT NULL,"
                    "urgentdays integer DEFAULT NULL)");
 
-    loademployees->prepare("SELECT fullname FROM employees");
-
     if(db_ok){
         ui->label->setText("sundethika");
     }
@@ -46,12 +45,25 @@ MainWindow::MainWindow(QWidget *parent) :
     }
     else{ ui->label_2->setText("ekleise ok !");}
 
+
+    update_combobox();
+
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
     connection.close();
+}
+
+void MainWindow::update_combobox()
+{
+    QSqlQueryModel *loader = new QSqlQueryModel;
+    QSqlQuery *loading = new QSqlQuery(connection);
+    loading->prepare("SELECT fullname FROM employees");
+    loading->exec();
+    loader->setQuery(*loading);
+    ui->comboBox_existed->setModel(loader);
 }
 
 void MainWindow::on_createHire_clicked()
@@ -88,6 +100,8 @@ void MainWindow::on_createHire_clicked()
         ui->lineEdit_vacation->clear();
         ui->lineEdit_urgentdays->clear();
 
+        update_combobox();
+
     } else {
 
         qDebug() <<"creating | hiring error"<< creatinghiring->lastError();
@@ -97,13 +111,10 @@ void MainWindow::on_createHire_clicked()
 
 }
 
-void MainWindow::on_refreshExistedButton_clicked()
-{
-
-}
 
 void MainWindow::on_comboBox_existed_currentIndexChanged(const QString &arg1)
 {
     QString selectedemployee=ui->comboBox_existed->currentText();
     bringdata->exec("SELECT * FROM employees WHERE fullname='"+selectedemployee+"' ");
 }
+

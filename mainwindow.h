@@ -17,6 +17,10 @@ class MainWindow : public QMainWindow
 {
     Q_OBJECT
 
+public:
+    explicit MainWindow(QWidget *parent = 0);
+    ~MainWindow();
+
     QSqlDatabase connection;
 
     QSqlQuery *creation;
@@ -25,18 +29,13 @@ class MainWindow : public QMainWindow
     QSqlQueryModel *modal;
     QSqlQuery *bringdata;
 
+    QMessageBox *creatinghiringMsgBox;
 
-   QMessageBox *creatinghiringMsgBox;
-
-public:
-    explicit MainWindow(QWidget *parent = 0);
-    ~MainWindow();
+    void update_combobox();
 
 private slots:
 
     void on_createHire_clicked();
-
-    void on_refreshExistedButton_clicked();
 
     void on_comboBox_existed_currentIndexChanged(const QString &arg1);
 
