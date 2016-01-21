@@ -25,15 +25,15 @@ MainWindow::MainWindow(QWidget *parent) :
     bringdata = new QSqlQuery(connection);
 
     creation->exec("CREATE TABLE IF NOT EXISTS employees"
-                  "(id integer primary key AUTOINCREMENT,"
-                  "fullname varchar(80) DEFAULT NULL,"
-                  "age integer DEFAULT NULL,"
-                  "residence varchar(100) DEFAULT NULL,"
-                  "salary integer DEFAULT NULL,"
-                  "bonuses integer DEFAULT NULL,"
-                  "insurance integer DEFAULT NULL,"
-                  "vacation integer DEFAULT NULL,"
-                  "urgentdays integer DEFAULT NULL)");
+                   "(id integer primary key AUTOINCREMENT,"
+                   "fullname varchar(80) DEFAULT NULL,"
+                   "age integer DEFAULT NULL,"
+                   "residence varchar(100) DEFAULT NULL,"
+                   "salary integer DEFAULT NULL,"
+                   "bonuses integer DEFAULT NULL,"
+                   "insurance integer DEFAULT NULL,"
+                   "vacation integer DEFAULT NULL,"
+                   "urgentdays integer DEFAULT NULL)");
 
     loademployees->prepare("SELECT fullname FROM employees");
 
@@ -70,41 +70,40 @@ void MainWindow::on_createHire_clicked()
 
     creatinghiringMsgBox = new QMessageBox;
     creatinghiringMsgBox->setWindowTitle("Creation problem");
-    creatinghiringMsgBox->setText("Could not create new employee in database because of an error.");
     creatinghiringMsgBox->setStandardButtons(QMessageBox::Ok);
 
-    if(!creatinghiring->exec()){
-          qDebug() <<"creating | hiring error"<< creatinghiring->lastError();
+    if(!ui->lineEdit_fullName->text().isEmpty() &&
+            !ui->lineEdit_age->text().isEmpty() &&
+            !ui->lineEdit_residence->text().isEmpty() &&
+            creatinghiring->exec()  ){
 
-        creatinghiringMsgBox->exec();
-     }else{
         creatinghiringMsgBox->setText("New employee is hired and added to our database!");
         creatinghiringMsgBox->exec();
-    }
+        ui->lineEdit_fullName->clear();
+        ui->lineEdit_age->clear();
+        ui->lineEdit_residence->clear();
+        ui->lineEdit_salary->clear();
+        ui->lineEdit_bonuses->clear();
+        ui->lineEdit_insurance->clear();
+        ui->lineEdit_vacation->clear();
+        ui->lineEdit_urgentdays->clear();
 
-    ui->lineEdit_fullName->clear();
-    ui->lineEdit_age->clear();
-    ui->lineEdit_residence->clear();
-    ui->lineEdit_salary->clear();
-    ui->lineEdit_bonuses->clear();
-    ui->lineEdit_insurance->clear();
-    ui->lineEdit_vacation->clear();
-    ui->lineEdit_urgentdays->clear();
+    } else {
+
+        qDebug() <<"creating | hiring error"<< creatinghiring->lastError();
+        creatinghiringMsgBox->setText("Could not create new employee in database. Please fill the required fealds to create new employee instance.");
+        creatinghiringMsgBox->exec();
+    }
 
 }
 
 void MainWindow::on_refreshExistedButton_clicked()
 {
 
-
 }
 
 void MainWindow::on_comboBox_existed_currentIndexChanged(const QString &arg1)
 {
     QString selectedemployee=ui->comboBox_existed->currentText();
-
     bringdata->exec("SELECT * FROM employees WHERE fullname='"+selectedemployee+"' ");
-
-
-
 }
