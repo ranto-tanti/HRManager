@@ -28,16 +28,25 @@ public:
     QSqlQuery *loademployees;
     QSqlQueryModel *modal;
     QSqlQuery *bringdata;
+    QSqlQuery *update;
+
+    QString selected;
 
     QMessageBox *creatinghiringMsgBox;
+    QMessageBox *updateMsgBox;
+    QMessageBox *loadMsgBox;
 
     void update_combobox();
+    void bind_values();
 
 private slots:
 
     void on_createHire_clicked();
 
     void on_comboBox_existed_currentIndexChanged(const QString &arg1);
+
+    void on_pushButton_update_clicked();
+
 
 private:
     Ui::MainWindow *ui;
