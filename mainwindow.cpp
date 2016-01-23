@@ -25,6 +25,10 @@ MainWindow::MainWindow(QWidget *parent) :
     loademployees = new QSqlQuery(connection);
     bringdata = new QSqlQuery(connection);
     update = new QSqlQuery(connection);
+    counter = new QSqlQuery(connection);
+    totalsalary = new QSqlQuery(connection);
+    totalbonuses = new QSqlQuery(connection);
+    totalinsurance = new QSqlQuery(connection);
 
     creation->exec("CREATE TABLE IF NOT EXISTS employees"
                    "(id integer primary key AUTOINCREMENT,"
@@ -48,6 +52,32 @@ MainWindow::MainWindow(QWidget *parent) :
 
 
     update_combobox();
+
+    QString count1;
+    counter->prepare("SELECT count(*) FROM employees");
+    counter->exec();
+    counter->first();
+    count1 = counter->value(0).toString();
+    ui->numberOfEmployees->setText(count1);
+
+    QString count2;
+    QString count3;
+    QString count4;
+    totalbonuses->prepare("SELECT sum(bonuses) FROM employees");
+    totalsalary->prepare("SELECT sum(salary) FROM employees");
+    totalinsurance->prepare("SELECT sum(insurance) FROM employees");
+    totalsalary->exec();
+    totalbonuses->exec();
+    totalinsurance->exec();
+    totalsalary->first();
+    totalbonuses->first();
+    totalinsurance->first();
+    count2 = totalsalary->value(0).toString();
+    count3 = totalinsurance->value(0).toString();
+    count4 = totalbonuses->value(0).toString();
+    ui->lineEdit_totalSalary->setText(count2);
+    ui->lineEdit_totalBonuses->setText(count3);
+    ui->lineEdit_totalInsurance->setText(count4);
 
 }
 
@@ -181,7 +211,6 @@ void MainWindow::on_pushButton_remove_clicked()
 
 
         QMessageBox::StandardButton reply;
-        removeMsgBox->setWindowTitle("Delete Validation question");
         reply = QMessageBox::question(this, "Delete confirmation", "Are you sure you want to delete selected employee?", QMessageBox::Yes|QMessageBox::No);
 
         if(reply==QMessageBox::Yes){

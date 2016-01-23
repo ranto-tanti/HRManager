@@ -24,7 +24,7 @@
      </rect>
     </property>
     <property name="currentIndex">
-     <number>1</number>
+     <number>0</number>
     </property>
     <widget class="QWidget" name="tab_6">
      <attribute name="title">
@@ -51,7 +51,7 @@
        <string>Information of total employees</string>
       </property>
      </widget>
-     <widget class="QLineEdit" name="lineEdit_10">
+     <widget class="QLineEdit" name="numberOfEmployees">
       <property name="geometry">
        <rect>
         <x>140</x>
@@ -187,10 +187,10 @@
        <string>Total Salary given</string>
       </property>
      </widget>
-     <widget class="QLineEdit" name="lineEdit_14">
+     <widget class="QLineEdit" name="lineEdit_totalSalary">
       <property name="geometry">
        <rect>
-        <x>370</x>
+        <x>380</x>
         <y>100</y>
         <width>113</width>
         <height>20</height>
@@ -228,10 +228,10 @@
        <string>Total Bonuses given</string>
       </property>
      </widget>
-     <widget class="QLineEdit" name="lineEdit_15">
+     <widget class="QLineEdit" name="lineEdit_totalBonuses">
       <property name="geometry">
        <rect>
-        <x>370</x>
+        <x>380</x>
         <y>130</y>
         <width>113</width>
         <height>20</height>
@@ -280,6 +280,29 @@
       </property>
       <property name="text">
        <string>TextLabel</string>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="lineEdit_totalInsurance">
+      <property name="geometry">
+       <rect>
+        <x>380</x>
+        <y>160</y>
+        <width>113</width>
+        <height>20</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_5">
+      <property name="geometry">
+       <rect>
+        <x>270</x>
+        <y>160</y>
+        <width>101</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Total insurance given</string>
       </property>
      </widget>
     </widget>

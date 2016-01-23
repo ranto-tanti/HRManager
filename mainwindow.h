@@ -31,6 +31,11 @@ public:
     QSqlQuery *update;
     QSqlQuery *deleting;
 
+    QSqlQuery *counter;
+    QSqlQuery *totalsalary;
+    QSqlQuery *totalinsurance;
+    QSqlQuery *totalbonuses;
+
     QString selected;
 
     QMessageBox *creatinghiringMsgBox;
