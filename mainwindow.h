@@ -29,12 +29,14 @@ public:
     QSqlQueryModel *modal;
     QSqlQuery *bringdata;
     QSqlQuery *update;
+    QSqlQuery *deleting;
 
     QString selected;
 
     QMessageBox *creatinghiringMsgBox;
     QMessageBox *updateMsgBox;
     QMessageBox *loadMsgBox;
+    QMessageBox *removeMsgBox;
 
     void update_combobox();
     void bind_values();
@@ -47,6 +49,8 @@ private slots:
 
     void on_pushButton_update_clicked();
 
+
+    void on_pushButton_remove_clicked();
 
 private:
     Ui::MainWindow *ui;

@@ -171,3 +171,27 @@ void MainWindow::on_pushButton_update_clicked()
 }
 
 
+
+void MainWindow::on_pushButton_remove_clicked()
+{
+    removeMsgBox = new QMessageBox;
+    deleting = new QSqlQuery;
+    selected = ui->comboBox_existed->currentText();
+    deleting->prepare("DELETE FROM employees WHERE fullname = '"+selected+"' ");
+
+
+        QMessageBox::StandardButton reply;
+        removeMsgBox->setWindowTitle("Delete Validation question");
+        reply = QMessageBox::question(this, "Delete confirmation", "Are you sure you want to delete selected employee?", QMessageBox::Yes|QMessageBox::No);
+
+        if(reply==QMessageBox::Yes){
+            removeMsgBox->setText("Employee deleted successfully!");
+            removeMsgBox->exec();
+            deleting->exec();
+            update_combobox();
+        }else{
+            removeMsgBox->close();
+        }
+
+
+}
