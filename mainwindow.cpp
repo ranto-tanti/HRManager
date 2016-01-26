@@ -45,10 +45,15 @@ MainWindow::MainWindow(QWidget *parent) :
         ui->label->setText("sundethika");
     }
     if(db_ok){
-
         ui->label_2->setText("einai akoma anoixto");
+        ui->label_2->setStyleSheet("background-color:green");
+        ui->label->setStyleSheet("background-color:green");
+    }else{
+        ui->label_2->setText("ekleise ok !");
+        ui->label_2->setStyleSheet("background-color:green");
+
+        setStyleSheet("QLabel#label{background-color: red}");
     }
-    else{ ui->label_2->setText("ekleise ok !");}
 
 
     update_combobox();
@@ -95,6 +100,7 @@ void MainWindow::update_combobox()
     loading->exec();
     loader->setQuery(*loading);
     ui->comboBox_existed->setModel(loader);
+    ui->comboBox_existed_presence->setModel(loader);
 }
 
 void MainWindow::bind_values()
@@ -107,6 +113,18 @@ void MainWindow::bind_values()
     creatinghiring->bindValue(":ins",ui->lineEdit_insurance->text());
     creatinghiring->bindValue(":vac",ui->lineEdit_vacation->text());
     creatinghiring->bindValue(":urg",ui->lineEdit_urgentdays->text());
+}
+void MainWindow::clear_entries()
+{
+    ui->lineEdit_fullName->clear();
+    ui->lineEdit_age->clear();
+    ui->lineEdit_residence->clear();
+    ui->lineEdit_ID->clear();
+    ui->lineEdit_salary->clear();
+    ui->lineEdit_bonuses->clear();
+    ui->lineEdit_insurance->clear();
+    ui->lineEdit_vacation->clear();
+    ui->lineEdit_urgentdays->clear();
 }
 
 void MainWindow::on_createHire_clicked()
@@ -127,14 +145,7 @@ void MainWindow::on_createHire_clicked()
 
         creatinghiringMsgBox->setText("New employee is hired and added to our database!");
         creatinghiringMsgBox->exec();
-        ui->lineEdit_fullName->clear();
-        ui->lineEdit_age->clear();
-        ui->lineEdit_residence->clear();
-        ui->lineEdit_salary->clear();
-        ui->lineEdit_bonuses->clear();
-        ui->lineEdit_insurance->clear();
-        ui->lineEdit_vacation->clear();
-        ui->lineEdit_urgentdays->clear();
+        clear_entries();
 
         update_combobox();
 
@@ -200,8 +211,6 @@ void MainWindow::on_pushButton_update_clicked()
 
 }
 
-
-
 void MainWindow::on_pushButton_remove_clicked()
 {
     removeMsgBox = new QMessageBox;
@@ -221,6 +230,44 @@ void MainWindow::on_pushButton_remove_clicked()
         }else{
             removeMsgBox->close();
         }
+}
 
 
+
+void MainWindow::on_clearEntries_clicked()
+{
+    clear_entries();
+}
+
+
+void MainWindow::on_comboBox_existed_presence_currentIndexChanged(const QString &arg1)
+{
+    QString selectedPresence;
+    selectedPresence = ui->comboBox_existed_presence->currentText();
+    loademployees->prepare("SELECT * from employees WHERE fullname='"+selectedPresence+"' ");
+
+    loademployees->exec();
+    if(loademployees->exec()){
+        while(loademployees->next()){
+                ui->lineEdit_employeeIDPresence->setText(loademployees->value(0).toString());
+                ui->lineEdit_fullNamePresence->setText(loademployees->value(1).toString());
+                //ui->lineEdit_age->setText(loademployees->value(2).toString());
+                //ui->lineEdit_residence->setText(loademployees->value(3).toString());
+                //ui->lineEdit_salary->setText(loademployees->value(4).toString());
+                //ui->lineEdit_bonuses->setText(loademployees->value(5).toString());
+                //ui->lineEdit_insurance->setText(loademployees->value(6).toString());
+                ui->lineEdit_vacationPresence->setText(loademployees->value(7).toString());
+                ui->lineEdit_urgentDaysPresence->setText(loademployees->value(8).toString());
+        }
+    }else{
+        loadMsgBox = new QMessageBox;
+        loadMsgBox->setText("Could not Load employee data.");
+        loadMsgBox->exec();
+        qDebug() << "loading error:" <<loademployees->lastError();
+    }
+}
+
+void MainWindow::on_actionClose_triggered()
+{
+    this->close();
 }

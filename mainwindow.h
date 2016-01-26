@@ -2,7 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include <Qtsql>
+#include <QtSql>
 #include <QDebug>
 #include <QFileInfo>
 #include <QString>
@@ -37,6 +37,7 @@ public:
     QSqlQuery *totalbonuses;
 
     QString selected;
+    QString selectedPresence;
 
     QMessageBox *creatinghiringMsgBox;
     QMessageBox *updateMsgBox;
@@ -45,6 +46,7 @@ public:
 
     void update_combobox();
     void bind_values();
+    void clear_entries();
 
 private slots:
 
@@ -54,8 +56,13 @@ private slots:
 
     void on_pushButton_update_clicked();
 
-
     void on_pushButton_remove_clicked();
+
+    void on_clearEntries_clicked();
+
+    void on_comboBox_existed_presence_currentIndexChanged(const QString &arg1);
+
+    void on_actionClose_triggered();
 
 private:
     Ui::MainWindow *ui;
